@@ -52,6 +52,17 @@ public class TodoScheduleController {
     ) {
        return new ResponseEntity<>(todoScheduleService.updateTodoService(id, todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword(), todoRequestDto.getUpdated_date()), HttpStatus.OK);
     }
+
+    // ::: 선택 일정 삭제 API
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodoAPI(
+            @PathVariable Long id,
+            @RequestBody TodoRequestDto todoRequestDto
+    ) {
+        todoScheduleService.deleteTodoService(id, todoRequestDto.getPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
 

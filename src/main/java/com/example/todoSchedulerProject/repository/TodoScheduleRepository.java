@@ -31,7 +31,7 @@ public class TodoScheduleRepository implements TodoRepository{
         return todo;
     }
 
-    // ::: 전체 일정 조회
+    // ::: 전체 일정 조회(조건 적용은 JDBC와 연결할 때 추가할 예정)
     @Override
     public List<TodoResponseDto> searchAllTodos() {
 

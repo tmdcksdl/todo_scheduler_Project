@@ -15,4 +15,6 @@ public interface TodoRepository {
     Todo createTodo(Todo todo);
 
     List<TodoResponseDto> searchAllTodos();
+
+    Todo searchTodoById(Long id);
 }

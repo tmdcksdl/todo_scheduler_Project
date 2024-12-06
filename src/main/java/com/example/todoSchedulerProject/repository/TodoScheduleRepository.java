@@ -44,4 +44,11 @@ public class TodoScheduleRepository implements TodoRepository{
 
         return allTodos;
     }
+
+    // ::: 선택 일정 조회
+    @Override
+    public Todo searchTodoById(Long id) {
+
+        return todoList.get(id);
+    }
 }

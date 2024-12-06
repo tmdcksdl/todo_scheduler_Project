@@ -11,7 +11,6 @@ public class TodoResponseDto {
     private String title;
     private String content;
     private String writer;
-    private String password;
     private String created_date;
     private String updated_date;
 
@@ -21,11 +20,9 @@ public class TodoResponseDto {
         this.title = todo.getTitle();
         this.content = todo.getContent();
         this.writer = todo.getWriter();
-        this.password = todo.getPassword();
         this.created_date = todo.getCreated_date();
         this.updated_date = todo.getUpdated_date();
     }
-
 
     // 기능
 }

@@ -2,11 +2,10 @@ package com.example.todoSchedulerProject.repository;
 
 import com.example.todoSchedulerProject.domain.Todo;
 import com.example.todoSchedulerProject.dto.TodoRequestDto;
+import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class TodoScheduleRepository implements TodoRepository{
@@ -30,5 +29,19 @@ public class TodoScheduleRepository implements TodoRepository{
         todoList.put(todoId, todo);
 
         return todo;
+    }
+
+    // ::: 전체 일정 조회
+    @Override
+    public List<TodoResponseDto> searchAllTodos() {
+
+        List<TodoResponseDto> allTodos = new ArrayList<>();
+
+        for (Todo todo : todoList.values()) {
+            TodoResponseDto todoResponseDto = new TodoResponseDto(todo);
+            allTodos.add(todoResponseDto);
+        }
+
+        return allTodos;
     }
 }

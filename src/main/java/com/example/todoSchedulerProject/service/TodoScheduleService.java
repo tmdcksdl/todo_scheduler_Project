@@ -6,6 +6,8 @@ import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import com.example.todoSchedulerProject.repository.TodoScheduleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TodoScheduleService implements TodoService{
 
@@ -30,8 +32,14 @@ public class TodoScheduleService implements TodoService{
     }
 
     // ::: 전체 일정 조회 서비스
-    public void searchAllTodosService(TodoRequestDto todoRequestDto) {
+    @Override
+    public List<TodoResponseDto> searchAllTodosService() {
 
+        List<TodoResponseDto> allTodos = todoScheduleRepository.searchAllTodos();
 
+        return allTodos;
     }
+
+
+
 }

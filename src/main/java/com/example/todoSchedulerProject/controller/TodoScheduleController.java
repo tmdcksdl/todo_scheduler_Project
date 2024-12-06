@@ -44,7 +44,7 @@ public class TodoScheduleController {
         return new ResponseEntity<>(todoScheduleService.searchTodoByIdService(id), HttpStatus.OK);
     }
 
-    // ::: 선택 일정 수정 API
+    // ::: 선택 일정에 대한 수정 API
     @PatchMapping("/{id}")
     public ResponseEntity<TodoResponseDto> updateTodoAPI(
             @PathVariable Long id,

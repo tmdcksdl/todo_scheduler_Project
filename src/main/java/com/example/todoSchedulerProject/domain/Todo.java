@@ -28,6 +28,12 @@ public class Todo {
         this.updated_date = updated_date;
     }
 
-
     // 기능
+    // ::: Todo 수정
+    public void updateTodo(String title, String content, String writer, String updated_date) {
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.updated_date = updated_date;
+    }
 }

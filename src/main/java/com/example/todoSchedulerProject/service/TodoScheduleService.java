@@ -4,7 +4,10 @@ import com.example.todoSchedulerProject.domain.Todo;
 import com.example.todoSchedulerProject.dto.TodoRequestDto;
 import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import com.example.todoSchedulerProject.repository.TodoScheduleRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -40,6 +43,18 @@ public class TodoScheduleService implements TodoService{
         return allTodos;
     }
 
+    // ::: 선택 일정 조회 서비스
+    @Override
+    public TodoResponseDto searchTodoByIdService(Long id) {
+
+        Todo todo = todoScheduleRepository.searchTodoById(id);
+
+        if (todo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
+        }
+
+        return new TodoResponseDto(todo);
+    }
 
 
 }

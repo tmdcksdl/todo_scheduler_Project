@@ -15,4 +15,6 @@ public interface TodoService {
     TodoResponseDto createTodoService(TodoRequestDto todoRequestDto);
 
     List<TodoResponseDto> searchAllTodosService();
+
+    TodoResponseDto searchTodoByIdService(Long id);
 }

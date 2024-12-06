@@ -43,6 +43,15 @@ public class TodoScheduleController {
 
         return new ResponseEntity<>(todoScheduleService.searchTodoByIdService(id), HttpStatus.OK);
     }
+
+    // ::: 선택 일정 수정 API
+    @PatchMapping("/{id}")
+    public ResponseEntity<TodoResponseDto> updateTodoAPI(
+            @PathVariable Long id,
+            @RequestBody TodoRequestDto todoRequestDto
+    ) {
+       return new ResponseEntity<>(todoScheduleService.updateTodoService(id, todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword(), todoRequestDto.getUpdated_date()), HttpStatus.OK);
+    }
 }
 
 

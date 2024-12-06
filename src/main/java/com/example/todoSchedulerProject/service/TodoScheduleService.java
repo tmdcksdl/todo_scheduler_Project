@@ -78,4 +78,21 @@ public class TodoScheduleService implements TodoService{
         return new TodoResponseDto(todo);
     }
 
+    @Override
+    public void deleteTodoService(Long id, String password) {
+
+        Todo todo = todoScheduleRepository.searchTodoById(id);
+
+        if (todo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
+        }
+
+        if (password.equals(todo.getPassword())) {
+            todoScheduleRepository.deleteTodo(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+
 }

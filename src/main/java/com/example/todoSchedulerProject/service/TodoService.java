@@ -19,4 +19,6 @@ public interface TodoService {
     TodoResponseDto searchTodoByIdService(Long id);
 
     TodoResponseDto updateTodoService(Long id, String title, String content, String writer, String password, String updated_date);
+
+    void deleteTodoService(Long id, String password);
 }

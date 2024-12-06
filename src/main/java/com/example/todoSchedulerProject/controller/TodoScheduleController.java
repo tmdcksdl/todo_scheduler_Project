@@ -35,6 +35,14 @@ public class TodoScheduleController {
 
         return new ResponseEntity<>(todoScheduleService.searchAllTodosService(), HttpStatus.OK);
     }
+
+    // ::: 선택 일정 조회 API
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoResponseDto> searchTodoByIdAPI(@PathVariable Long id) {
+
+
+        return new ResponseEntity<>(todoScheduleService.searchTodoByIdService(id), HttpStatus.OK);
+    }
 }
 
 

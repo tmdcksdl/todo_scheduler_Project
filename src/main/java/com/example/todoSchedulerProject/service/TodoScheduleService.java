@@ -19,6 +19,7 @@ public class TodoScheduleService implements TodoService{
 
     // 기능
     // ::: 일정 생성 서비스
+    @Override
     public TodoResponseDto createTodoService(TodoRequestDto todoRequestDto) {
 
         Todo todo = new Todo(todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword(), todoRequestDto.getCreated_date(), todoRequestDto.getUpdated_date());
@@ -26,5 +27,11 @@ public class TodoScheduleService implements TodoService{
         Todo createdTodo = todoScheduleRepository.createTodo(todo);
 
         return new TodoResponseDto(createdTodo);
+    }
+
+    // ::: 전체 일정 조회 서비스
+    public void searchAllTodosService(TodoRequestDto todoRequestDto) {
+
+
     }
 }

@@ -19,6 +19,7 @@ public class TodoScheduleRepository implements TodoRepository{
 
     // 기능
     // ::: 일정 생성
+    @Override
     public Todo createTodo(Todo todo) {
 
         // todo의 id 자동 생성

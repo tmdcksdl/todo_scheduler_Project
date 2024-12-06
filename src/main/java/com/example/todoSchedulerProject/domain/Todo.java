@@ -2,12 +2,14 @@ package com.example.todoSchedulerProject.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
 public class Todo {
 
     // 속성
+    @Setter
     private Long id;
     private String title;
     private String content;

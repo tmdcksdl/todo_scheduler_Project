@@ -17,4 +17,6 @@ public interface TodoRepository {
     List<TodoResponseDto> searchAllTodos();
 
     Todo searchTodoById(Long id);
+
+    void deleteTodo(Long id);
 }

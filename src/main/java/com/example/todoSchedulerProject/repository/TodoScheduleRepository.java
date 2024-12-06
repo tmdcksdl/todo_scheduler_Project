@@ -51,4 +51,11 @@ public class TodoScheduleRepository implements TodoRepository{
 
         return todoList.get(id);
     }
+
+    // ::: 선택 일정 삭제
+    @Override
+    public void deleteTodo(Long id) {
+
+        todoList.remove(id);
+    }
 }

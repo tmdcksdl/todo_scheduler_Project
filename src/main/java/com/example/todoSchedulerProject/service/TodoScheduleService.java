@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class TodoScheduleService implements TodoService{
     @Override
     public TodoResponseDto createTodoService(TodoRequestDto todoRequestDto) {
 
-        Todo todo = new Todo(todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword(), todoRequestDto.getCreated_date(), todoRequestDto.getUpdated_date());
+        Todo todo = new Todo(todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword());
 
         Todo createdTodo = todoScheduleRepository.createTodo(todo);
 
@@ -56,7 +57,7 @@ public class TodoScheduleService implements TodoService{
     }
 
     @Override
-    public TodoResponseDto updateTodoService(Long id, String title, String content, String writer, String password, String updated_date) {
+    public TodoResponseDto updateTodoService(Long id, String title, String content, String writer, String password) {
 
         Todo todo = todoScheduleRepository.searchTodoById(id);
 
@@ -64,12 +65,12 @@ public class TodoScheduleService implements TodoService{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
         }
 
-        if ( title == null || content == null || writer == null || updated_date == null) {
+        if ( title == null || content == null || writer == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "제목, 내용, 작성자명, 수정일이 포함되어 있지 않습니다.");
         }
 
         if (password.equals(todo.getPassword())) {
-            todo.updateTodo(title, content, writer, updated_date);
+            todo.updateTodo(title, content, writer);
         }  else {
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
         }

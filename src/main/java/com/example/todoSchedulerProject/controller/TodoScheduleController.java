@@ -50,7 +50,7 @@ public class TodoScheduleController {
             @PathVariable Long id,
             @RequestBody TodoRequestDto todoRequestDto
     ) {
-       return new ResponseEntity<>(todoScheduleService.updateTodoService(id, todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword(), todoRequestDto.getUpdated_date()), HttpStatus.OK);
+       return new ResponseEntity<>(todoScheduleService.updateTodoService(id, todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword()), HttpStatus.OK);
     }
 
     // ::: 선택 일정 삭제 API

@@ -14,7 +14,7 @@ public interface TodoRepository {
     // 기능
     TodoResponseDto createTodo(Todo todo);
 
-    List<TodoResponseDto> searchAllTodos();
+    List<TodoResponseDto> searchAllTodos(String updated_date, String writer);
 
     Todo searchTodoById(Long id);
 

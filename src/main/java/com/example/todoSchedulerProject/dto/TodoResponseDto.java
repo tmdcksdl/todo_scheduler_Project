@@ -1,9 +1,11 @@
 package com.example.todoSchedulerProject.dto;
 
 import com.example.todoSchedulerProject.domain.Todo;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class TodoResponseDto {
 
     // 속성

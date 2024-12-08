@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class JdbcTemplateTodoRepository implements TodoRepository{
@@ -71,8 +72,11 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
     }
 
     @Override
-    public Todo searchTodoById(Long id) {
-        return null;
+    public Optional<Todo> searchTodoById(Long id) {
+
+        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", todoRowRapperV2(), id);
+
+        return result.stream().findAny();
     }
 
     @Override
@@ -80,7 +84,7 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
 
     }
 
-    private RowMapper<TodoResponseDto> todoRowMapper(){
+    private RowMapper<TodoResponseDto> todoRowMapper() {
 
         return new RowMapper<TodoResponseDto>() {
             @Override
@@ -90,6 +94,24 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
                         rs.getString("title"),
                         rs.getString("content"),
                         rs.getString("writer"),
+                        rs.getString("created_date"),
+                        rs.getString("updated_date")
+                );
+            }
+        };
+    }
+
+    private RowMapper<Todo> todoRowRapperV2() {
+
+        return new RowMapper<Todo>() {
+            @Override
+            public Todo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Todo(
+                        rs.getLong("id"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getString("writer"),
+                        rs.getString("password"),
                         rs.getString("created_date"),
                         rs.getString("updated_date")
                 );

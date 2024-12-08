@@ -4,6 +4,7 @@ import com.example.todoSchedulerProject.domain.Todo;
 import com.example.todoSchedulerProject.dto.TodoResponseDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TodoRepository {
 
@@ -16,7 +17,7 @@ public interface TodoRepository {
 
     List<TodoResponseDto> searchAllTodos(String updated_date, String writer);
 
-    Todo searchTodoById(Long id);
+    Optional<Todo> searchTodoById(Long id);
 
     void deleteTodo(Long id);
 }

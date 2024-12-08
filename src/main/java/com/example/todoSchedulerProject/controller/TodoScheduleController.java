@@ -32,9 +32,11 @@ public class TodoScheduleController {
 
     // ::: 전체 일정 조회 API
     @GetMapping
-    public ResponseEntity<List<TodoResponseDto>> searchAllTodosAPI(){
-
-        return new ResponseEntity<>(todoService.searchAllTodosService(), HttpStatus.OK);
+    public ResponseEntity<List<TodoResponseDto>> searchAllTodosAPI(
+            @RequestParam(required = false) String updated_date,
+            @RequestParam(required = false) String writer
+    ){
+        return new ResponseEntity<>(todoService.searchAllTodosService(updated_date, writer), HttpStatus.OK);
     }
 
     // ::: 선택 일정 조회 API

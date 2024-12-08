@@ -3,11 +3,14 @@ package com.example.todoSchedulerProject.repository;
 import com.example.todoSchedulerProject.domain.Todo;
 import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,7 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
     }
 
     // 기능
+    // ::: 일정 생성
     @Override
     public TodoResponseDto createTodo(Todo todo) {
 
@@ -45,9 +49,25 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
         return new TodoResponseDto(key.longValue(), todo.getTitle(), todo.getContent(), todo.getWriter(), todo.getCreated_date(), todo.getUpdated_date());
     }
 
+    // ::: 전체 일정 조회
     @Override
-    public List<TodoResponseDto> searchAllTodos() {
-        return List.of();
+    public List<TodoResponseDto> searchAllTodos(String updated_date, String writer) {
+
+        String sql = "SELECT * FROM todo";
+
+        if (updated_date != null && writer != null) {
+            sql += " WHERE updated_date LIKE ? AND writer = ? ORDER BY updated_date DESC";
+            return jdbcTemplate.query(sql, todoRowMapper(), updated_date, writer);
+        } else if (updated_date != null) {
+            sql += " WHERE updated_date LIKE ? ORDER BY updated_date DESC";
+            return jdbcTemplate.query(sql, todoRowMapper(), updated_date);
+        } else if (writer != null) {
+            sql += " WHERE writer = ? ORDER BY updated_date DESC";
+            return jdbcTemplate.query(sql, todoRowMapper(), writer);
+        } else {
+            sql += " ORDER BY updated_date DESC";
+            return jdbcTemplate.query(sql, todoRowMapper());
+        }
     }
 
     @Override
@@ -58,5 +78,22 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
     @Override
     public void deleteTodo(Long id) {
 
+    }
+
+    private RowMapper<TodoResponseDto> todoRowMapper(){
+
+        return new RowMapper<TodoResponseDto>() {
+            @Override
+            public TodoResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new TodoResponseDto(
+                        rs.getLong("id"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getString("writer"),
+                        rs.getString("created_date"),
+                        rs.getString("updated_date")
+                );
+            }
+        };
     }
 }

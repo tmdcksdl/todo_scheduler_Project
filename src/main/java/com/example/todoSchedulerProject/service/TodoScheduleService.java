@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoScheduleService implements TodoService{
@@ -47,51 +48,52 @@ public class TodoScheduleService implements TodoService{
     @Override
     public TodoResponseDto searchTodoByIdService(Long id) {
 
-        Todo todo = todoRepository.searchTodoById(id);
+        Optional<Todo> optionalTodo = todoRepository.searchTodoById(id);
 
-        if (todo == null) {
+        if (optionalTodo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
         }
 
-        return new TodoResponseDto(todo);
+        return new TodoResponseDto(optionalTodo.get());
     }
 
     @Override
     public TodoResponseDto updateTodoService(Long id, String title, String content, String writer, String password) {
 
-        Todo todo = todoRepository.searchTodoById(id);
-
-        if (todo == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
-        }
-
-        if ( title == null || content == null || writer == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "제목, 내용, 작성자명, 수정일이 포함되어 있지 않습니다.");
-        }
-
-        if (password.equals(todo.getPassword())) {
-            todo.updateTodo(title, content, writer);
-        }  else {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
-        }
-
-
-        return new TodoResponseDto(todo);
+//        Todo todo = todoRepository.searchTodoById(id);
+//
+//        if (todo == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
+//        }
+//
+//        if ( title == null || content == null || writer == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "제목, 내용, 작성자명, 수정일이 포함되어 있지 않습니다.");
+//        }
+//
+//        if (password.equals(todo.getPassword())) {
+//            todo.updateTodo(title, content, writer);
+//        }  else {
+//            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+//        }
+//
+//
+//        return new TodoResponseDto(todo);
+        return null;
     }
 
     @Override
     public void deleteTodoService(Long id, String password) {
 
-        Todo todo = todoRepository.searchTodoById(id);
-
-        if (todo == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
-        }
-
-        if (password.equals(todo.getPassword())) {
-            todoRepository.deleteTodo(id);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
-        }
+//        Todo todo = todoRepository.searchTodoById(id);
+//
+//        if (todo == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
+//        }
+//
+//        if (password.equals(todo.getPassword())) {
+//            todoRepository.deleteTodo(id);
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+//        }
     }
 }

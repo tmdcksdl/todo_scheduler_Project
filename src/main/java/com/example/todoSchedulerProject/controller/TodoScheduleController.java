@@ -3,6 +3,7 @@ package com.example.todoSchedulerProject.controller;
 import com.example.todoSchedulerProject.dto.TodoRequestDto;
 import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import com.example.todoSchedulerProject.service.TodoScheduleService;
+import com.example.todoSchedulerProject.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,11 @@ import java.util.List;
 public class TodoScheduleController {
 
     // 속성
-    private final TodoScheduleService todoScheduleService;
+    private final TodoService todoService;
 
     // 생성자
-    public TodoScheduleController(TodoScheduleService todoScheduleService) {
-        this.todoScheduleService = todoScheduleService;
+    public TodoScheduleController(TodoService todoService) {
+        this.todoService = todoService;
     }
 
     // 기능
@@ -26,14 +27,14 @@ public class TodoScheduleController {
     @PostMapping
     public ResponseEntity<TodoResponseDto> createTodoAPI(@RequestBody TodoRequestDto todoRequestDto) {
 
-        return new ResponseEntity<>(todoScheduleService.createTodoService(todoRequestDto),HttpStatus.CREATED);
+        return new ResponseEntity<>(todoService.createTodoService(todoRequestDto),HttpStatus.CREATED);
     }
 
     // ::: 전체 일정 조회 API
     @GetMapping
     public ResponseEntity<List<TodoResponseDto>> searchAllTodosAPI(){
 
-        return new ResponseEntity<>(todoScheduleService.searchAllTodosService(), HttpStatus.OK);
+        return new ResponseEntity<>(todoService.searchAllTodosService(), HttpStatus.OK);
     }
 
     // ::: 선택 일정 조회 API
@@ -41,7 +42,7 @@ public class TodoScheduleController {
     public ResponseEntity<TodoResponseDto> searchTodoByIdAPI(@PathVariable Long id) {
 
 
-        return new ResponseEntity<>(todoScheduleService.searchTodoByIdService(id), HttpStatus.OK);
+        return new ResponseEntity<>(todoService.searchTodoByIdService(id), HttpStatus.OK);
     }
 
     // ::: 선택 일정에 대한 수정 API
@@ -50,7 +51,7 @@ public class TodoScheduleController {
             @PathVariable Long id,
             @RequestBody TodoRequestDto todoRequestDto
     ) {
-       return new ResponseEntity<>(todoScheduleService.updateTodoService(id, todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword()), HttpStatus.OK);
+       return new ResponseEntity<>(todoService.updateTodoService(id, todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword()), HttpStatus.OK);
     }
 
     // ::: 선택 일정 삭제 API
@@ -59,7 +60,7 @@ public class TodoScheduleController {
             @PathVariable Long id,
             @RequestBody TodoRequestDto todoRequestDto
     ) {
-        todoScheduleService.deleteTodoService(id, todoRequestDto.getPassword());
+        todoService.deleteTodoService(id, todoRequestDto.getPassword());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

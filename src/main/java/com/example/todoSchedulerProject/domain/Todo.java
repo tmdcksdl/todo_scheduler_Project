@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 public class Todo {
 
     // 속성
-    @Setter
     private Long id;
     private String title;
     private String content;

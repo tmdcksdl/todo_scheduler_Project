@@ -71,6 +71,7 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
         }
     }
 
+    // ::: 선택 일정 조회
     @Override
     public Optional<Todo> searchTodoById(Long id) {
 

@@ -12,7 +12,7 @@ public interface TodoRepository {
     // 생성자
 
     // 기능
-    Todo createTodo(Todo todo);
+    TodoResponseDto createTodo(Todo todo);
 
     List<TodoResponseDto> searchAllTodos();
 

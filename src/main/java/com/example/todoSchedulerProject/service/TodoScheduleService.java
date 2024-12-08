@@ -4,12 +4,10 @@ import com.example.todoSchedulerProject.domain.Todo;
 import com.example.todoSchedulerProject.dto.TodoRequestDto;
 import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import com.example.todoSchedulerProject.repository.TodoRepository;
-import com.example.todoSchedulerProject.repository.TodoScheduleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,11 +26,11 @@ public class TodoScheduleService implements TodoService{
     @Override
     public TodoResponseDto createTodoService(TodoRequestDto todoRequestDto) {
 
+        // 요청 받은 데이터로 Todo 객체 생성
         Todo todo = new Todo(todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword());
 
-        Todo createdTodo = todoRepository.createTodo(todo);
-
-        return new TodoResponseDto(createdTodo);
+        // 저장
+        return todoRepository.createTodo(todo);
     }
 
     // ::: 전체 일정 조회 서비스

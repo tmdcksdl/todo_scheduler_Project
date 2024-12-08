@@ -15,7 +15,7 @@ public interface TodoService {
     // 기능
     TodoResponseDto createTodoService(TodoRequestDto todoRequestDto);
 
-    List<TodoResponseDto> searchAllTodosService();
+    List<TodoResponseDto> searchAllTodosService(String updated_date, String writer);
 
     TodoResponseDto searchTodoByIdService(Long id);
 

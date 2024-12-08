@@ -26,7 +26,7 @@ public class TodoScheduleService implements TodoService{
     @Override
     public TodoResponseDto createTodoService(TodoRequestDto todoRequestDto) {
 
-        // 요청 받은 데이터로 Todo 객체 생성
+        // 요청 받은 데이터로 일정 객체 생성
         Todo todo = new Todo(todoRequestDto.getTitle(), todoRequestDto.getContent(), todoRequestDto.getWriter(), todoRequestDto.getPassword());
 
         // 저장
@@ -35,9 +35,10 @@ public class TodoScheduleService implements TodoService{
 
     // ::: 전체 일정 조회 서비스
     @Override
-    public List<TodoResponseDto> searchAllTodosService() {
+    public List<TodoResponseDto> searchAllTodosService(String updated_date, String writer) {
 
-        List<TodoResponseDto> allTodos = todoRepository.searchAllTodos();
+        // 리스트 형태의 TodoResponseDto를 바로 반환받는다.
+        List<TodoResponseDto> allTodos = todoRepository.searchAllTodos(updated_date, writer);
 
         return allTodos;
     }

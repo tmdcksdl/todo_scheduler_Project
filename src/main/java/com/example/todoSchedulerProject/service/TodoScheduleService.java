@@ -49,13 +49,9 @@ public class TodoScheduleService implements TodoService{
     @Override
     public TodoResponseDto searchTodoByIdService(Long id) {
 
-        Optional<Todo> optionalTodo = todoRepository.searchTodoById(id);
+        Todo todo = todoRepository.searchTodoByIdOrElseThrow(id);
 
-        if (optionalTodo == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
-        }
-
-        return new TodoResponseDto(optionalTodo.get());
+        return new TodoResponseDto(todo);
     }
 
     // ::: 선택 일정 수정 서비스

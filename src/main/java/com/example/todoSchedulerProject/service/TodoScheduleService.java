@@ -6,6 +6,7 @@ import com.example.todoSchedulerProject.dto.TodoResponseDto;
 import com.example.todoSchedulerProject.repository.TodoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -57,28 +58,23 @@ public class TodoScheduleService implements TodoService{
         return new TodoResponseDto(optionalTodo.get());
     }
 
+    // ::: 선택 일정 수정 서비스
+    @Transactional
     @Override
     public TodoResponseDto updateTodoService(Long id, String title, String content, String writer, String password) {
 
-//        Todo todo = todoRepository.searchTodoById(id);
-//
-//        if (todo == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
-//        }
-//
-//        if ( title == null || content == null || writer == null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "제목, 내용, 작성자명, 수정일이 포함되어 있지 않습니다.");
-//        }
-//
-//        if (password.equals(todo.getPassword())) {
-//            todo.updateTodo(title, content, writer);
-//        }  else {
-//            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
-//        }
-//
-//
-//        return new TodoResponseDto(todo);
-        return null;
+        // 필수값 검증
+        if (title == null || content == null || writer == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "제목, 내용, 작성자명이 포함되어 있지 않습니다.");
+        }
+
+        int updateRow = todoRepository.updateTodo(id, title, content, writer, password);
+
+        if (updateRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id);
+        }
+
+        return new TodoResponseDto(todoRepository.searchTodoById(id).get());
     }
 
     @Override

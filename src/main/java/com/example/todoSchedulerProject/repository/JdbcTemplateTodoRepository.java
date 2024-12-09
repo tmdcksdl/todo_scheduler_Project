@@ -103,9 +103,11 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
 
     }
 
+    // :: 선택 일정 삭제
     @Override
-    public void deleteTodo(Long id) {
-
+    public int deleteTodo(Long id, String password) {
+        // 쿼리의 영향을 받은 row 수를 int로 반환받는다.
+        return jdbcTemplate.update("DELETE FROM todo WHERE id = ? AND password = ?", id, password);
     }
 
     private RowMapper<TodoResponseDto> todoRowMapper() {

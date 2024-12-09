@@ -85,13 +85,13 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
     }
 
     // ::: 선택 일정 조회 예외 처리
-//    @Override
-//    public Todo searchTodoByIdOrElseThrow(Long id) {
-//
-//        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", todoRowMapperV2(), id);
-//
-//        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id));
-//    }
+    @Override
+    public Todo searchTodoByIdOrElseThrow(Long id) {
+
+        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", todoRowMapperV2(), id);
+
+        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id));
+    }
 
     // ::: 선택 일정 수정
     @Override

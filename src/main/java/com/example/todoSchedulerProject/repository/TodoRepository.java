@@ -21,5 +21,5 @@ public interface TodoRepository {
 
     int updateTodo(Long id, String title, String content, String writer, String password);
 
-    void deleteTodo(Long id);
+    int deleteTodo(Long id, String password);
 }

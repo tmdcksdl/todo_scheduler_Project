@@ -2,15 +2,19 @@ package com.example.todoSchedulerProject.repository;
 
 import com.example.todoSchedulerProject.domain.Todo;
 import com.example.todoSchedulerProject.dto.TodoResponseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +44,7 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
         parameters.put("title", todo.getTitle());
         parameters.put("content", todo.getContent());
         parameters.put("writer", todo.getWriter());
-        parameters.put("password", todo.getWriter());
+        parameters.put("password", todo.getPassword());
         parameters.put("created_date", todo.getCreated_date());
         parameters.put("updated_date", todo.getUpdated_date());
 
@@ -57,10 +61,10 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
         String sql = "SELECT * FROM todo";
 
         if (updated_date != null && writer != null) {
-            sql += " WHERE updated_date LIKE ? AND writer = ? ORDER BY updated_date DESC";
+            sql += " WHERE DATE(updated_date) = ? AND writer = ? ORDER BY updated_date DESC";
             return jdbcTemplate.query(sql, todoRowMapper(), updated_date, writer);
         } else if (updated_date != null) {
-            sql += " WHERE updated_date LIKE ? ORDER BY updated_date DESC";
+            sql += " WHERE DATE(updated_date) = ? ORDER BY updated_date DESC";
             return jdbcTemplate.query(sql, todoRowMapper(), updated_date);
         } else if (writer != null) {
             sql += " WHERE writer = ? ORDER BY updated_date DESC";
@@ -75,9 +79,28 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
     @Override
     public Optional<Todo> searchTodoById(Long id) {
 
-        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", todoRowRapperV2(), id);
+        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", todoRowMapperV2(), id);
 
         return result.stream().findAny();
+    }
+
+    // ::: 선택 일정 조회 예외 처리
+//    @Override
+//    public Todo searchTodoByIdOrElseThrow(Long id) {
+//
+//        List<Todo> result = jdbcTemplate.query("SELECT * FROM todo WHERE id = ?", todoRowMapperV2(), id);
+//
+//        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id입니다. id = " + id));
+//    }
+
+    // ::: 선택 일정 수정
+    @Override
+    public int updateTodo(Long id, String title, String content, String writer, String password) {
+        
+        String sql = "UPDATE todo SET title = ?, content = ?, writer = ?, updated_date = ? WHERE id = ? AND password = ?";
+
+        return jdbcTemplate.update(sql, title, content, writer, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), id, password);
+
     }
 
     @Override
@@ -102,7 +125,7 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
         };
     }
 
-    private RowMapper<Todo> todoRowRapperV2() {
+    private RowMapper<Todo> todoRowMapperV2() {
 
         return new RowMapper<Todo>() {
             @Override

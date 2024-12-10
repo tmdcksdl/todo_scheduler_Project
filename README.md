@@ -39,7 +39,7 @@
     
     ```json
     {
-    		"id" : 1,
+        "id" : 1,
         "title" : "제목",
         "content" : "내용",
         "writer" : "작성자명",
@@ -81,19 +81,19 @@
     [
         {
             "id" : 2,
-    		    "title" : "제목2",
-    		    "content" : "내용2",
-    		    "writer" : "작성자명2",
-    		    "created_date" : "YYYY-MM-DD HH:mm:ss",
-    		    "updated_date" : "YYYY-MM-DD HH:mm:ss"
+            "title" : "제목2",
+            "content" : "내용2",
+            "writer" : "작성자명2",
+            "created_date" : "YYYY-MM-DD HH:mm:ss",
+            "updated_date" : "YYYY-MM-DD HH:mm:ss"
         },
         {
             "id" : 1,
-    		    "title" : "제목1",
-    		    "content" : "내용1",
-    		    "writer" : "작성자명",
-    		    "created_date" : "YYYY-MM-DD HH:mm:ss",
-    		    "updated_date" : "YYYY-MM-DD HH:mm:ss"
+            "title" : "제목1",
+            "content" : "내용1",
+            "writer" : "작성자명",
+            "created_date" : "YYYY-MM-DD HH:mm:ss",
+            "updated_date" : "YYYY-MM-DD HH:mm:ss"
         }
         
     ]
@@ -233,27 +233,6 @@
 - `created_date` : 작성일 (YYYY-MM-DD HH:mm:ss)
 - `updated_date` : 수정일 (YYYY-MM-DD HH:mm:ss)
 ![필수 과제 ERD](images/ERD1.png)
-
----
-
-### **< 도전 과제 ERD>**
-
-**MEMBER**
-
-- `id` (PK) : 회원의 고유 식별자
-- `name` : 회원 이름
-- `email` : 회원 이메일
-- `created_date` : 작성일 (YYYY-MM-DD HH:mm:ss)
-- `updated_date` : 수정일 (YYYY-MM-DD HH:mm:ss)
-
-**TODO**
-
-- `id` (PK) : 일정의 고유 식별자
-- `user_id` (FK) : 작성자의 회원 id (Member 테이블 참조)
-- `title` : 일정 제목
-- `content` : 일정 내용
-- `password` : 일정 수정 및 삭제를 위한 비밀번호
-![도전 과제 ERD](images/ERD2.png)
 
 ---
 
